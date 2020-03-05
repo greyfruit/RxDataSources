@@ -6,18 +6,16 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
-import Foundation
 import UIKit
+import Foundation
+import Differentiator
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
 #endif
-import Differentiator
 
-open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionModelType>
-    : TableViewSectionedDataSource<Section>
-    , RxTableViewDataSourceType {
+open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionModelType>: TableViewSectionedDataSource<Section>, RxTableViewDataSourceType {
+    
     public typealias Element = [Section]
     public typealias DecideViewTransition = (TableViewSectionedDataSource<Section>, UITableView, [Changeset<Section>]) -> ViewTransition
 
@@ -130,4 +128,3 @@ open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionMode
         }.on(observedEvent)
     }
 }
-#endif

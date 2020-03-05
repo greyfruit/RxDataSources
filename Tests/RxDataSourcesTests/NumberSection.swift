@@ -38,7 +38,7 @@ extension NumberSection
     typealias Item = IntItem
     typealias Identity = String
 
-    var identity: String {
+    var id: String {
         return header
     }
 
@@ -62,11 +62,10 @@ extension NumberSection
 }
 
 extension IntItem
-    : IdentifiableType
+    : Identifiable
     , Equatable {
-    typealias Identity = Int
-
-    var identity: Int {
+    
+    var id: Int {
         return number
     }
 }

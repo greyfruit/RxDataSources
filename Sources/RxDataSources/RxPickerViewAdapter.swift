@@ -6,13 +6,11 @@
 //  Copyright © 2017 kzaher. All rights reserved.
 //
 
-#if os(iOS)
-
-import Foundation
 import UIKit
+import Foundation
 #if !RX_NO_MODULE
-    import RxSwift
-    import RxCocoa
+import RxSwift
+import RxCocoa
 #endif
 
 /// A reactive UIPickerView adapter which uses `func pickerView(UIPickerView, titleForRow: Int, forComponent: Int)` to display the content
@@ -229,5 +227,3 @@ extension RxPickerViewDataSource: RxPickerViewDataSourceType {
         }.on(observedEvent)
     }
 }
-
-#endif

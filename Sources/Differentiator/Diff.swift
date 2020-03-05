@@ -8,16 +8,6 @@
 
 import Foundation
 
-fileprivate extension AnimatableSectionModelType {
-    init(safeOriginal: Self, safeItems: [Item]) throws {
-        self.init(original: safeOriginal, items: safeItems)
-
-        if self.items != safeItems || self.identity != safeOriginal.identity {
-            throw Diff.Error.invalidInitializerImplementation(section: self, expectedItems: safeItems, expectedIdentifier: safeOriginal.identity)
-        }
-    }
-}
-
 public enum Diff {
 
     public enum Error : Swift.Error, CustomDebugStringConvertible {
@@ -41,12 +31,13 @@ public enum Diff {
     }
 
     private enum EditEvent : CustomDebugStringConvertible {
-        case inserted           // can't be found in old sections
-        case insertedAutomatically           // Item inside section being inserted
-        case deleted            // Was in old, not in new, in it's place is something "not new" :(, otherwise it's Updated
-        case deletedAutomatically            // Item inside section that is being deleted
-        case moved              // same item, but was on different index, and needs explicit move
-        case movedAutomatically // don't need to specify any changes for those rows
+        
+        case inserted               // can't be found in old sections
+        case insertedAutomatically  // Item inside section being inserted
+        case deleted                // Was in old, not in new, in it's place is something "not new" :(, otherwise it's Updated
+        case deletedAutomatically   // Item inside section that is being deleted
+        case moved                  // same item, but was on different index, and needs explicit move
+        case movedAutomatically     // don't need to specify any changes for those rows
         case untouched
 
         var debugDescription: String {
@@ -70,13 +61,14 @@ public enum Diff {
     }
 
     private struct SectionAssociatedData : CustomDebugStringConvertible {
+        
         var event: EditEvent
         var indexAfterDelete: Int?
         var moveIndex: Int?
         var itemCount: Int
 
         var debugDescription: String {
-            return "\(event), \(String(describing: indexAfterDelete))"
+            return "\(self.event), \(String(describing: self.indexAfterDelete))"
         }
 
         static var initial: SectionAssociatedData {
@@ -85,6 +77,7 @@ public enum Diff {
     }
 
     private struct ItemAssociatedData: CustomDebugStringConvertible {
+        
         var event: EditEvent
         var indexAfterDelete: Int?
         var moveIndex: ItemPath?
@@ -98,18 +91,18 @@ public enum Diff {
         }
     }
 
-    private static func indexSections<Section: AnimatableSectionModelType>(_ sections: [Section]) throws -> [Section.Identity : Int] {
-        var indexedSections: [Section.Identity : Int] = [:]
+    private static func indexSections<Section: AnimatableSectionModelType>(_ sections: [Section]) throws -> [Section.ID : Int] {
+        var indexedSections: [Section.ID : Int] = [:]
         for (i, section) in sections.enumerated() {
-            guard indexedSections[section.identity] == nil else {
+            guard indexedSections[section.id] == nil else {
                 #if DEBUG
-                    if indexedSections[section.identity] != nil {
-                        print("Section \(section) has already been indexed at \(indexedSections[section.identity]!)")
+                    if indexedSections[section.id] != nil {
+                        print("Section \(section) has already been indexed at \(indexedSections[section.id]!)")
                     }
                 #endif
                 throw Error.duplicateSection(section: section)
             }
-            indexedSections[section.identity] = i
+            indexedSections[section.id] = i
         }
 
         return indexedSections
@@ -148,13 +141,13 @@ public enum Diff {
 
     }
 
-    private static func calculateAssociatedData<Item: IdentifiableType>(
+    private static func calculateAssociatedData<Item: Identifiable>(
         initialItemCache: ContiguousArray<ContiguousArray<Item>>,
         finalItemCache: ContiguousArray<ContiguousArray<Item>>
     ) throws
         -> (ContiguousArray<ContiguousArray<ItemAssociatedData>>, ContiguousArray<ContiguousArray<ItemAssociatedData>>) {
             // swiftlint:disable:next nesting
-            typealias Identity = Item.Identity
+            typealias Identity = Item.ID
             let totalInitialItems = initialItemCache.map { $0.count }.reduce(0, +)
 
             var initialIdentities: ContiguousArray<Identity> = ContiguousArray()
@@ -166,7 +159,7 @@ public enum Diff {
             for (i, items) in initialItemCache.enumerated() {
                 for j in 0 ..< items.count {
                     let item = items[j]
-                    initialIdentities.append(item.identity)
+                    initialIdentities.append(item.id)
                     initialItemPaths.append(ItemPath(sectionIndex: i, itemIndex: j))
                 }
             }
@@ -202,7 +195,7 @@ public enum Diff {
                 for (i, items) in finalItemCache.enumerated() {
                     for j in 0 ..< items.count {
                         let item = items[j]
-                        var identity = item.identity
+                        var identity = item.id
                         let key = OptimizedIdentity(&identity)
                         guard let initialItemPathIndex = dictionary[key] else {
                             continue
@@ -520,7 +513,7 @@ public enum Diff {
 
                 for (i, section) in finalSections.enumerated() {
                     finalSectionData[i].itemCount = finalSections[i].items.count
-                    guard let initialSectionIndex = initialSectionIndexes[section.identity] else {
+                    guard let initialSectionIndex = initialSectionIndexes[section.id] else {
                         continue
                     }
 
@@ -774,6 +767,17 @@ public enum Diff {
                 insertedItems: insertedItems,
                 movedItems: movedItems
                 )]
+        }
+    }
+}
+
+fileprivate extension AnimatableSectionModelType {
+    
+    init(safeOriginal: Self, safeItems: [Item]) throws {
+        self.init(original: safeOriginal, items: safeItems)
+        
+        guard self.items == safeItems && self.id == safeOriginal.id else {
+            throw Diff.Error.invalidInitializerImplementation(section: self, expectedItems: safeItems, expectedIdentifier: safeOriginal.id)
         }
     }
 }

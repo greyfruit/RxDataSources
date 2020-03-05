@@ -9,6 +9,7 @@
 import Foundation
 
 public struct ItemPath {
+    
     public let sectionIndex: Int
     public let itemIndex: Int
 
@@ -20,17 +21,16 @@ public struct ItemPath {
 
 extension ItemPath : Equatable {
     
-}
-
-public func == (lhs: ItemPath, rhs: ItemPath) -> Bool {
-    return lhs.sectionIndex == rhs.sectionIndex && lhs.itemIndex == rhs.itemIndex
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.sectionIndex == rhs.sectionIndex
+            && lhs.itemIndex == rhs.itemIndex
+    }
 }
 
 extension ItemPath: Hashable {
 
     public func hash(into hasher: inout Hasher) {
-      hasher.combine(sectionIndex.byteSwapped.hashValue)
-      hasher.combine(itemIndex.hashValue)
+        hasher.combine(self.sectionIndex.byteSwapped.hashValue)
+        hasher.combine(self.itemIndex.hashValue)
     }
-    
 }

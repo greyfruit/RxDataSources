@@ -9,13 +9,13 @@
 import Foundation
 
 extension Optional {
+    
     func unwrap() throws -> Wrapped {
-        if let unwrapped = self {
-            return unwrapped
+        switch self {
+        case .some(let wrapped):
+            return wrapped
+        case .none:
+            debugFatalError("Error during unwrapping optional"); throw DifferentiatorError.unwrappingOptional
         }
-        else {
-            debugFatalError("Error during unwrapping optional")
-            throw DifferentiatorError.unwrappingOptional
-        }
-   }
+    }
 }

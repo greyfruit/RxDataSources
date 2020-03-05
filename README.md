@@ -12,7 +12,7 @@ Table and Collection view data sources
   - even though the running time is linear, preferred number of sent commands is usually a lot less than linear
   - it is preferred (and possible) to cap the number of changes to some small number, and in case the number of changes grows towards linear, just do normal reload
 - [x] Supports **extending your item and section structures**
-  - just extend your item with `IdentifiableType` and `Equatable`, and your section with `AnimatableSectionModelType`
+  - just extend your item with `Identifiable` and `Equatable`, and your section with `AnimatableSectionModelType`
 - [x] Supports all combinations of two level hierarchical animations for **both sections and items**
   - Section animations: Insert, Delete, Move
   - Item animations: Insert, Delete, Move, Reload (if old value is not equal to new value)
@@ -138,7 +138,7 @@ To use one of the two animated data sources, you must take a few extra steps on 
 
 - SectionOfCustomData needs to conform to `AnimatableSectionModelType`
 - Your data model must conform to
-  * `IdentifiableType`: The `identity` provided by the `IdentifiableType` protocol must be an **immutable identifier representing an instance of the model**. For example, in case of a `Car` model, you might want to use the car's `plateNumber` as its identity.
+  * `Identifiable`: The `identity` provided by the `Identifiable` protocol must be an **immutable identifier representing an instance of the model**. For example, in case of a `Car` model, you might want to use the car's `plateNumber` as its identity.
   * `Equatable`: Conforming to `Equatable` helps `RxDataSources` determine which cells have changed so it can animate only these specific cells. Meaning, changing **any** of the `Car` model's properties will trigger an animated reload of that cell.
 
 ## Requirements

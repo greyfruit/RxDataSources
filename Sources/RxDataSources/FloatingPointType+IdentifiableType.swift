@@ -1,5 +1,5 @@
 //
-//  FloatingPointType+IdentifiableType.swift
+//  FloatingPointType+Identifiable.swift
 //  RxDataSources
 //
 //  Created by Krunoslav Zaher on 7/4/16.
@@ -8,18 +8,19 @@
 
 import Foundation
 
-extension FloatingPoint {
-    typealias identity = Self
-
-    public var identity: Self {
+public extension FloatingPoint {
+    
+    typealias ID = Self
+    
+    var id: ID {
         return self
     }
 }
 
-extension Float : IdentifiableType {
-
+extension Float: Identifiable {
+    
 }
 
-extension Double : IdentifiableType {
-
+extension Double: Identifiable {
+    
 }

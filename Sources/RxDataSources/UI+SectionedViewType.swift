@@ -6,18 +6,9 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
-import Foundation
 import UIKit
+import Foundation
 import Differentiator
-
-func indexSet(_ values: [Int]) -> IndexSet {
-    let indexSet = NSMutableIndexSet()
-    for i in values {
-        indexSet.add(i)
-    }
-    return indexSet as IndexSet
-}
 
 extension UITableView : SectionedViewType {
   
@@ -38,11 +29,11 @@ extension UITableView : SectionedViewType {
     }
     
     public func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.insertSections(indexSet(sections), with: animationStyle)
+        self.insertSections(IndexSet(sections), with: animationStyle)
     }
     
     public func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.deleteSections(indexSet(sections), with: animationStyle)
+        self.deleteSections(IndexSet(sections), with: animationStyle)
     }
     
     public func moveSection(_ from: Int, to: Int) {
@@ -50,11 +41,12 @@ extension UITableView : SectionedViewType {
     }
     
     public func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.reloadSections(indexSet(sections), with: animationStyle)
+        self.reloadSections(IndexSet(sections), with: animationStyle)
     }
 }
 
 extension UICollectionView : SectionedViewType {
+    
     public func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
         self.insertItems(at: paths)
     }
@@ -72,11 +64,11 @@ extension UICollectionView : SectionedViewType {
     }
     
     public func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.insertSections(indexSet(sections))
+        self.insertSections(IndexSet(sections))
     }
     
     public func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.deleteSections(indexSet(sections))
+        self.deleteSections(IndexSet(sections))
     }
     
     public func moveSection(_ from: Int, to: Int) {
@@ -84,30 +76,33 @@ extension UICollectionView : SectionedViewType {
     }
     
     public func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
-        self.reloadSections(indexSet(sections))
+        self.reloadSections(IndexSet(sections))
     }
 }
 
 public protocol SectionedViewType {
+    
     func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
     func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
-    func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath)
     func reloadItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
+    func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath)
     
     func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
     func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
-    func moveSection(_ from: Int, to: Int)
     func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
+    func moveSection(_ from: Int, to: Int)
 }
 
 extension SectionedViewType {
+    
     public func batchUpdates<Section>(_ changes: Changeset<Section>, animationConfiguration: AnimationConfiguration) {
-        // swiftlint:disable:next nesting
-        typealias Item = Section.Item
         
         deleteSections(changes.deletedSections, animationStyle: animationConfiguration.deleteAnimation)
         
         insertSections(changes.insertedSections, animationStyle: animationConfiguration.insertAnimation)
+        
+        reloadSections(changes.updatedSections, animationStyle: animationConfiguration.reloadAnimation)
+        
         for (from, to) in changes.movedSections {
             moveSection(from, to: to)
         }
@@ -133,4 +128,3 @@ extension SectionedViewType {
         }
     }
 }
-#endif

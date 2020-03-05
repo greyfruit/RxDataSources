@@ -241,7 +241,7 @@ struct Randomizer {
                     nextUnusedItems.append(item)
                 }
 
-                nextUnusedSections.append(section.identity)
+                nextUnusedSections.append(section.id)
             }
         }
 

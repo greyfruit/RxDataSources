@@ -6,14 +6,15 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
 import Foundation
 
 extension Array where Element: SectionModelType {
+    
     mutating func moveFromSourceIndexPath(_ sourceIndexPath: IndexPath, destinationIndexPath: IndexPath) {
+        
         let sourceSection = self[sourceIndexPath.section]
         var sourceItems = sourceSection.items
-
+        
         let sourceItem = sourceItems.remove(at: sourceIndexPath.item)
 
         let sourceSectionNew = Element(original: sourceSection, items: sourceItems)
@@ -26,4 +27,3 @@ extension Array where Element: SectionModelType {
         self[destinationIndexPath.section] = Element(original: destinationSection, items: destinationItems)
     }
 }
-#endif

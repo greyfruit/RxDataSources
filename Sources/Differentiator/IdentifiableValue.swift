@@ -12,30 +12,27 @@ public struct IdentifiableValue<Value: Hashable> {
     public let value: Value
 }
 
-extension IdentifiableValue
-    : IdentifiableType {
-
-    public typealias Identity = Value
-
-    public var identity : Identity {
-        return value
+extension IdentifiableValue: Identifiable {
+    
+    public var id : Value {
+        return self.value
     }
 }
 
-extension IdentifiableValue
-    : Equatable
-    , CustomStringConvertible
-    , CustomDebugStringConvertible {
+extension IdentifiableValue: Equatable {
+    
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.value == rhs.value
+    }
+}
 
+extension IdentifiableValue: CustomStringConvertible, CustomDebugStringConvertible {
+    
     public var description: String {
-        return "\(value)"
+        return "\(self.value)"
     }
 
     public var debugDescription: String {
-        return "\(value)"
+        return "\(self.value)"
     }
-}
-
-public func == <V>(lhs: IdentifiableValue<V>, rhs: IdentifiableValue<V>) -> Bool {
-    return lhs.value == rhs.value
 }

@@ -116,7 +116,7 @@ through init.
 
 #### Possibly breaking changes
 
-* Adds default IdentifiableType extensions for:
+* Adds default Identifiable extensions for:
 	* String
 	* Int
 	* Float

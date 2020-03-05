@@ -14,13 +14,13 @@ import RxDataSources
  Test section. Name is so short for readability sake.
  */
 struct s {
-    let identity: Int
+    let id: Int
     let items: [i]
 }
 
 extension s {
-    init(_ identity: Int, _ items: [i]) {
-        self.identity = identity
+    init(_ id: Int, _ items: [i]) {
+        self.id = id
         self.items = items
     }
 }
@@ -29,7 +29,7 @@ extension s: AnimatableSectionModelType {
     typealias Item = i
 
     init(original: s, items: [Item]) {
-        self.identity = original.identity
+        self.id = original.id
         self.items = items
     }
 }
@@ -39,45 +39,47 @@ extension s: Equatable {
 }
 
 func == (lhs: s, rhs: s) -> Bool {
-    return lhs.identity == rhs.identity && lhs.items == rhs.items
+    return lhs.id == rhs.id
+        && lhs.items == rhs.items
 }
 
 extension s: CustomDebugStringConvertible {
     var debugDescription: String {
         let itemDescriptions = items.map { "\n    \($0)," }.joined(separator: "")
-        return "s(\(identity),\(itemDescriptions)\n)"
+        return "s(\(id),\(itemDescriptions)\n)"
     }
 }
 
 struct sInvalidInitializerImplementation1 {
-    let identity: Int
+    let id: Int
     let items: [i]
 
-    init(_ identity: Int, _ items: [i]) {
-        self.identity = identity
+    init(_ id: Int, _ items: [i]) {
+        self.id = id
         self.items = items
     }
 }
 
 func == (lhs: sInvalidInitializerImplementation1, rhs: sInvalidInitializerImplementation1) -> Bool {
-    return lhs.identity == rhs.identity && lhs.items == rhs.items
+    return lhs.id == rhs.id
+        && lhs.items == rhs.items
 }
 
 extension sInvalidInitializerImplementation1: AnimatableSectionModelType, Equatable {
     typealias Item = i
 
     init(original: sInvalidInitializerImplementation1, items: [Item]) {
-        self.identity = original.identity
+        self.id = original.id
         self.items = items + items
     }
 }
 
 struct sInvalidInitializerImplementation2 {
-    let identity: Int
+    let id: Int
     let items: [i]
 
-    init(_ identity: Int, _ items: [i]) {
-        self.identity = identity
+    init(_ id: Int, _ items: [i]) {
+        self.id = id
         self.items = items
     }
 }
@@ -86,11 +88,12 @@ extension sInvalidInitializerImplementation2: AnimatableSectionModelType, Equata
     typealias Item = i
 
     init(original: sInvalidInitializerImplementation2, items: [Item]) {
-        self.identity = -1
+        self.id = -1
         self.items = items
     }
 }
 
 func == (lhs: sInvalidInitializerImplementation2, rhs: sInvalidInitializerImplementation2) -> Bool {
-    return lhs.identity == rhs.identity && lhs.items == rhs.items
+    return lhs.id == rhs.id
+        && lhs.items == rhs.items
 }

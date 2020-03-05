@@ -1,5 +1,5 @@
 //
-//  IntegerType+IdentifiableType.swift
+//  IntegerType+Identifiable.swift
 //  RxDataSources
 //
 //  Created by Krunoslav Zaher on 7/4/16.
@@ -8,52 +8,53 @@
 
 import Foundation
 
-extension BinaryInteger {
-    typealias identity = Self
+public extension BinaryInteger {
+    
+    typealias ID = Self
 
-    public var identity: Self {
+    var id: ID {
         return self
     }
 }
 
-extension Int : IdentifiableType {
+extension Int : Identifiable {
 
 }
 
-extension Int8 : IdentifiableType {
+extension Int8 : Identifiable {
 
 }
 
-extension Int16 : IdentifiableType {
+extension Int16 : Identifiable {
 
 }
 
-extension Int32 : IdentifiableType {
+extension Int32 : Identifiable {
 
 }
 
-extension Int64 : IdentifiableType {
+extension Int64 : Identifiable {
 
 }
 
 
-extension UInt : IdentifiableType {
+extension UInt : Identifiable {
 
 }
 
-extension UInt8 : IdentifiableType {
+extension UInt8 : Identifiable {
 
 }
 
-extension UInt16 : IdentifiableType {
+extension UInt16 : Identifiable {
 
 }
 
-extension UInt32 : IdentifiableType {
+extension UInt32 : Identifiable {
 
 }
 
-extension UInt64 : IdentifiableType {
+extension UInt64 : Identifiable {
     
 }
 

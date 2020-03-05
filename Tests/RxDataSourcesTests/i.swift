@@ -11,24 +11,24 @@ import Differentiator
 import RxDataSources
 
 struct i {
-    let identity: Int
+    let id: Int
     let value: String
 
-    init(_ identity: Int, _ value: String) {
-        self.identity = identity
+    init(_ id: Int, _ value: String) {
+        self.id = id
         self.value = value
     }
 }
 
-extension i: IdentifiableType, Equatable {
+extension i: Identifiable, Equatable {
 }
 
 func == (lhs: i, rhs: i) -> Bool {
-    return lhs.identity == rhs.identity && lhs.value == rhs.value
+    return lhs.id == rhs.id && lhs.value == rhs.value
 }
 
 extension i: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "i(\(identity), \(value))"
+        return "i(\(id), \(value))"
     }
 }

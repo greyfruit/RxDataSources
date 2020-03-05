@@ -6,25 +6,21 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
-import Foundation
 import UIKit
+import Foundation
+import Differentiator
 #if !RX_NO_MODULE
 import RxCocoa
 #endif
-import Differentiator
     
-open class CollectionViewSectionedDataSource<Section: SectionModelType>
-    : NSObject
-    , UICollectionViewDataSource
-    , SectionedViewDataSourceType {
+open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObject, UICollectionViewDataSource, SectionedViewDataSourceType {
+    
     public typealias Item = Section.Item
     public typealias Section = Section
     public typealias ConfigureCell = (CollectionViewSectionedDataSource<Section>, UICollectionView, IndexPath, Item) -> UICollectionViewCell
     public typealias ConfigureSupplementaryView = (CollectionViewSectionedDataSource<Section>, UICollectionView, String, IndexPath) -> UICollectionReusableView
     public typealias MoveItem = (CollectionViewSectionedDataSource<Section>, _ sourceIndexPath:IndexPath, _ destinationIndexPath:IndexPath) -> Void
     public typealias CanMoveItemAtIndexPath = (CollectionViewSectionedDataSource<Section>, IndexPath) -> Bool
-
 
     public init(
         configureCell: @escaping ConfigureCell,
@@ -161,4 +157,3 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>
         }
     }
 }
-#endif

@@ -8,7 +8,12 @@
 
 import Foundation
 
-public struct AnimatableSectionModel<Section: IdentifiableType, ItemType: IdentifiableType & Equatable> {
+public protocol AnimatableSectionModelType: SectionModelType, Identifiable where Item: Identifiable, Item: Equatable {
+    
+}
+
+public struct AnimatableSectionModel<Section: Identifiable, ItemType: Identifiable & Equatable> {
+    
     public var model: Section
     public var items: [Item]
 
@@ -16,43 +21,35 @@ public struct AnimatableSectionModel<Section: IdentifiableType, ItemType: Identi
         self.model = model
         self.items = items
     }
-    
 }
 
-extension AnimatableSectionModel
-    : AnimatableSectionModelType {
-    public typealias Item = ItemType
-    public typealias Identity = Section.Identity
-
-    public var identity: Section.Identity {
-        return model.identity
+extension AnimatableSectionModel: AnimatableSectionModelType {
+    
+    public var id: Section.ID {
+        return self.model.id
     }
 
-    public init(original: AnimatableSectionModel, items: [Item]) {
+    public init(original: AnimatableSectionModel, items: [ItemType]) {
         self.model = original.model
         self.items = items
     }
     
     public var hashValue: Int {
-        return self.model.identity.hashValue
+        return self.model.id.hashValue
     }
 }
 
-
-extension AnimatableSectionModel
-    : CustomStringConvertible {
-
-    public var description: String {
-        return "HashableSectionModel(model: \"\(self.model)\", items: \(items))"
-    }
-
-}
-
-extension AnimatableSectionModel
-    : Equatable where Section: Equatable {
+extension AnimatableSectionModel: Equatable where Section: Equatable {
     
     public static func == (lhs: AnimatableSectionModel, rhs: AnimatableSectionModel) -> Bool {
         return lhs.model == rhs.model
             && lhs.items == rhs.items
+    }
+}
+
+extension AnimatableSectionModel: CustomStringConvertible {
+
+    public var description: String {
+        return "HashableSectionModel(model: \"\(self.model)\", items: \(items))"
     }
 }

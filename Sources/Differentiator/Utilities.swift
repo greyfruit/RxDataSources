@@ -14,9 +14,11 @@ enum DifferentiatorError : Error {
 }
 
 func precondition(_ condition: Bool, _ message: @autoclosure() -> String) throws {
+    
     if condition {
         return
     }
+    
     debugFatalError("Precondition failed")
 
     throw DifferentiatorError.preconditionFailed(message: message())

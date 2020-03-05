@@ -1,5 +1,5 @@
 //
-//  String+IdentifiableType.swift
+//  String+Identifiable.swift
 //  RxDataSources
 //
 //  Created by Krunoslav Zaher on 7/4/16.
@@ -8,10 +8,11 @@
 
 import Foundation
 
-extension String : IdentifiableType {
-    public typealias Identity = String
+extension String : Identifiable {
 
-    public var identity: String {
+    public typealias ID = Self
+    
+    public var id: ID {
         return self
     }
 }

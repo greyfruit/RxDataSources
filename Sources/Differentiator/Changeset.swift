@@ -9,44 +9,51 @@
 import Foundation
 
 public struct Changeset<Section: SectionModelType> {
-    public typealias Item = Section.Item
 
     public let reloadData: Bool
 
+    /*
+     Input and output
+     */
     public let originalSections: [Section]
     public let finalSections: [Section]
 
+    /*
+     Sections transformations
+     */
     public let insertedSections: [Int]
     public let deletedSections: [Int]
     public let movedSections: [(from: Int, to: Int)]
     public let updatedSections: [Int]
 
+    /*
+     Items transformations
+     */
     public let insertedItems: [ItemPath]
     public let deletedItems: [ItemPath]
     public let movedItems: [(from: ItemPath, to: ItemPath)]
     public let updatedItems: [ItemPath]
 
-    init(reloadData: Bool = false,
-         originalSections: [Section] = [],
-         finalSections: [Section] = [],
-         insertedSections: [Int] = [],
-         deletedSections: [Int] = [],
-         movedSections: [(from: Int, to: Int)] = [],
-         updatedSections: [Int] = [],
-         insertedItems: [ItemPath] = [],
-         deletedItems: [ItemPath] = [],
-         movedItems: [(from: ItemPath, to: ItemPath)] = [],
-         updatedItems: [ItemPath] = []) {
+    init(
+        reloadData: Bool = false,
+        originalSections: [Section] = [],
+        finalSections: [Section] = [],
+        insertedSections: [Int] = [],
+        deletedSections: [Int] = [],
+        movedSections: [(from: Int, to: Int)] = [],
+        updatedSections: [Int] = [],
+        insertedItems: [ItemPath] = [],
+        deletedItems: [ItemPath] = [],
+        movedItems: [(from: ItemPath, to: ItemPath)] = [],
+        updatedItems: [ItemPath] = []
+    ) {
         self.reloadData = reloadData
-
         self.originalSections = originalSections
         self.finalSections = finalSections
-
         self.insertedSections = insertedSections
         self.deletedSections = deletedSections
         self.movedSections = movedSections
         self.updatedSections = updatedSections
-
         self.insertedItems = insertedItems
         self.deletedItems = deletedItems
         self.movedItems = movedItems
@@ -57,20 +64,19 @@ public struct Changeset<Section: SectionModelType> {
         return Changeset<Section>(
             reloadData: true,
             finalSections: sections,
-            insertedSections: Array(0 ..< sections.count) as [Int]
+            insertedSections: Array<Int>(0 ..< sections.count)
         )
     }
 }
 
-extension ItemPath
-    : CustomDebugStringConvertible {
+extension ItemPath: CustomDebugStringConvertible {
+    
     public var debugDescription : String {
         return "(\(sectionIndex), \(itemIndex))"
     }
 }
 
-extension Changeset
-    : CustomDebugStringConvertible {
+extension Changeset: CustomDebugStringConvertible {
 
     public var debugDescription : String {
         let serializedSections = "[\n" + finalSections.map { "\($0)" }.joined(separator: ",\n") + "\n]\n"

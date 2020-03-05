@@ -6,14 +6,13 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
-import Foundation
 import UIKit
+import Foundation
+import Differentiator
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
 #endif
-import Differentiator
 
 open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectionModelType>
     : CollectionViewSectionedDataSource<Section>
@@ -98,4 +97,3 @@ open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectio
         }.on(observedEvent)
     }
 }
-#endif

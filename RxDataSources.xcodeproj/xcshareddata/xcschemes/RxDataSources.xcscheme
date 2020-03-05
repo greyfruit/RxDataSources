@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C8984C591C36AF35001E4272"
+               BlueprintIdentifier = "RxDataSources::RxDataSources"
                BuildableName = "RxDataSources.framework"
                BlueprintName = "RxDataSources"
                ReferencedContainer = "container:RxDataSources.xcodeproj">
@@ -29,8 +29,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -45,14 +43,12 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C8984C591C36AF35001E4272"
+            BlueprintIdentifier = "RxDataSources::RxDataSources"
             BuildableName = "RxDataSources.framework"
             BlueprintName = "RxDataSources"
             ReferencedContainer = "container:RxDataSources.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -63,7 +59,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C8984C591C36AF35001E4272"
+            BlueprintIdentifier = "RxDataSources::RxDataSources"
             BuildableName = "RxDataSources.framework"
             BlueprintName = "RxDataSources"
             ReferencedContainer = "container:RxDataSources.xcodeproj">

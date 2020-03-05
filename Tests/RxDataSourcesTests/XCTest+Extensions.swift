@@ -59,11 +59,11 @@ fileprivate func printSectionModelDifferences<S: AnimatableSectionModelType>(_ l
         let l = elements.0
         let r = elements.1
         if l != r {
-            if l.identity != r.identity {
-                print("lhs.identity[\(index)] (\(l.identity)) != rhs.identity[\(index)] (\(r.identity))\n")
+            if l.id != r.id {
+                print("lhs.identity[\(index)] (\(l.id)) != rhs.identity[\(index)] (\(r.id))\n")
             }
             if l.items != r.items {
-                print("Difference in items for \(l.identity) and \(r.identity)")
+                print("Difference in items for \(l.id) and \(r.id)")
                 printSequenceDifferences(l.items, r.items, { $0 == $1 })
             }
         }
@@ -77,4 +77,3 @@ fileprivate func printSectionModelDifferences<S: AnimatableSectionModelType>(_ l
         print("missing rhs[\(index + shortest)]:\n    \(element)")
     }
 }
-

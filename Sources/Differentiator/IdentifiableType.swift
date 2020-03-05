@@ -8,8 +8,9 @@
 
 import Foundation
 
-public protocol IdentifiableType {
-    associatedtype Identity: Hashable
+public protocol Identifiable {
+    
+    associatedtype ID: Hashable
 
-    var identity : Identity { get }
+    var id : ID { get }
 }

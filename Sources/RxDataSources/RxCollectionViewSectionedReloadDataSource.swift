@@ -6,18 +6,15 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
-import Foundation
 import UIKit
+import Foundation
+import Differentiator
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
 #endif
-import Differentiator
 
-open class RxCollectionViewSectionedReloadDataSource<Section: SectionModelType>
-    : CollectionViewSectionedDataSource<Section>
-    , RxCollectionViewDataSourceType {
+open class RxCollectionViewSectionedReloadDataSource<Section: SectionModelType>: CollectionViewSectionedDataSource<Section>, RxCollectionViewDataSourceType {
     
     public typealias Element = [Section]
 
@@ -32,4 +29,3 @@ open class RxCollectionViewSectionedReloadDataSource<Section: SectionModelType>
         }.on(observedEvent)
     }
 }
-#endif

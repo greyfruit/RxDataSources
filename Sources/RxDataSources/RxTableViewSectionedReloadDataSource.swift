@@ -6,18 +6,16 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-#if os(iOS) || os(tvOS)
-import Foundation
 import UIKit
+import Foundation
+import Differentiator
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
 #endif
-import Differentiator
 
-open class RxTableViewSectionedReloadDataSource<Section: SectionModelType>
-    : TableViewSectionedDataSource<Section>
-    , RxTableViewDataSourceType {
+open class RxTableViewSectionedReloadDataSource<Section: SectionModelType>: TableViewSectionedDataSource<Section>, RxTableViewDataSourceType {
+    
     public typealias Element = [Section]
 
     open func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
@@ -30,4 +28,3 @@ open class RxTableViewSectionedReloadDataSource<Section: SectionModelType>
         }.on(observedEvent)
     }
 }
-#endif
