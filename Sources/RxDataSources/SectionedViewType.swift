@@ -10,6 +10,19 @@ import UIKit
 import Foundation
 import Differentiator
 
+public protocol SectionedViewType {
+    
+    func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
+    func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
+    func reloadItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
+    func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath)
+    
+    func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
+    func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
+    func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
+    func moveSection(_ from: Int, to: Int)
+}
+
 extension UITableView : SectionedViewType {
   
     public func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
@@ -78,19 +91,6 @@ extension UICollectionView : SectionedViewType {
     public func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation) {
         self.reloadSections(IndexSet(sections))
     }
-}
-
-public protocol SectionedViewType {
-    
-    func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
-    func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
-    func reloadItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation)
-    func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath)
-    
-    func insertSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
-    func deleteSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
-    func reloadSections(_ sections: [Int], animationStyle: UITableView.RowAnimation)
-    func moveSection(_ from: Int, to: Int)
 }
 
 extension SectionedViewType {

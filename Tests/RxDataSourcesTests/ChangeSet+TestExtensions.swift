@@ -123,9 +123,6 @@ extension Changeset {
     }
 
     private func applySectionMovesAndInserts(original: [Section]) -> [Section] {
-        if !updatedSections.isEmpty {
-            fatalError("Section updates aren't supported")
-        }
 
         let sourceSectionIndexes = Set(movedSections.map { $0.from })
         let destinationToSourceMapping = Dictionary(

@@ -40,7 +40,7 @@ extension s: Equatable {
 
 func == (lhs: s, rhs: s) -> Bool {
     return lhs.id == rhs.id
-        && lhs.items == rhs.items
+//        && lhs.items == rhs.items
 }
 
 extension s: CustomDebugStringConvertible {
@@ -62,7 +62,7 @@ struct sInvalidInitializerImplementation1 {
 
 func == (lhs: sInvalidInitializerImplementation1, rhs: sInvalidInitializerImplementation1) -> Bool {
     return lhs.id == rhs.id
-        && lhs.items == rhs.items
+//        && lhs.items == rhs.items
 }
 
 extension sInvalidInitializerImplementation1: AnimatableSectionModelType, Equatable {

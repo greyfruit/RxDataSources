@@ -23,9 +23,11 @@ public enum Diff {
             case let .duplicateSection(section):
                 return "Duplicate section \(section)"
             case let .invalidInitializerImplementation(section, expectedItems, expectedIdentifier):
-                return "Wrong initializer implementation for: \(section)\n" +
-                    "Expected it should return items: \(expectedItems)\n" +
-                "Expected it should have id: \(expectedIdentifier)"
+                return """
+                Wrong initializer implementation for: \(section)
+                Expected it should return items: \(expectedItems)
+                Expected it should have id: \(expectedIdentifier)
+                """
             }
         }
     }
@@ -38,6 +40,7 @@ public enum Diff {
         case deletedAutomatically   // Item inside section that is being deleted
         case moved                  // same item, but was on different index, and needs explicit move
         case movedAutomatically     // don't need to specify any changes for those rows
+        case updated
         case untouched
 
         var debugDescription: String {
@@ -54,6 +57,8 @@ public enum Diff {
                 return "Moved"
             case .movedAutomatically:
                 return "MovedAutomatically"
+            case .updated:
+                return "Updated"
             case .untouched:
                 return "Untouched"
             }
@@ -345,6 +350,7 @@ public enum Diff {
         initialSections: [Section],
         finalSections: [Section])
         throws -> [Changeset<Section>] {
+            
             var result: [Changeset<Section>] = []
 
             var sectionCommands = try CommandGenerator<Section>.generatorForInitialSections(initialSections, finalSections: finalSections)
@@ -445,6 +451,10 @@ public enum Diff {
 
                     var indexAfterDelete = 0
                     for j in 0 ..< initialItemCache[i].count {
+                        
+                        guard initialSectionData[i].event != .updated else {
+                            continue
+                        }
 
                         guard let finalIndexPath = initialItemData[i][j].moveIndex else {
                             initialItemData[i][j].event = .deleted
@@ -474,6 +484,10 @@ public enum Diff {
                     for j in 0 ..< finalItemCache[i].count {
                         untouchedIndex = findNextUntouchedOldIndex(originalSectionIndex, untouchedIndex)
 
+                        guard finalSectionData[i].event != .updated else {
+                            continue
+                        }
+                        
                         guard let originalIndex = finalItemData[i][j].moveIndex else {
                             finalItemData[i][j].event = .inserted
                             continue
@@ -490,7 +504,7 @@ public enum Diff {
                         }
 
                         let initialSectionEvent = initialSectionData[originalIndex.sectionIndex].event
-                        try precondition(initialSectionEvent == .moved || initialSectionEvent == .movedAutomatically, "Section not moved")
+                        try precondition(initialSectionEvent == .moved || initialSectionEvent == .movedAutomatically || initialSectionEvent == .updated, "Section not moved")
 
                         let eventType = originalIndex == ItemPath(sectionIndex: originalSectionIndex, itemIndex: untouchedIndex ?? -1)
                             ? EditEvent.movedAutomatically : EditEvent.moved
@@ -577,16 +591,30 @@ public enum Diff {
                 }
 
                 // inserted sections
-                for (i, section) in finalSectionData.enumerated() where  section.moveIndex == nil {
-                    _ = finalSectionData[i].event == .inserted
+                for (i, section) in finalSectionData.enumerated() {
+                    if section.moveIndex == nil {
+                        _ = finalSectionData[i].event == .inserted
+                    }
                 }
 
+                // updated sections
+                for (i, finalSection) in finalSections.enumerated() {
+                    for (j, initialSection) in initialSections.enumerated() {
+                        if i == j, finalSection.id == initialSection.id, finalSection != initialSection {
+                            initialSectionData[i].event = .updated
+                            finalSectionData[i].event = .updated
+                        }
+                    }
+                }
+                
                 return (initialSectionData, finalSectionData)
         }
 
         mutating func generateDeleteSectionsDeletedItemsAndUpdatedItems() throws -> [Changeset<Section>] {
+            
             var deletedSections = [Int]()
-
+            var updatedSections = [Int]()
+            
             var deletedItems = [ItemPath]()
             var updatedItems = [ItemPath]()
 
@@ -596,7 +624,7 @@ public enum Diff {
             // 1rst stage again (I know, I know ...)
             for (i, initialItems) in initialItemCache.enumerated() {
                 let event = initialSectionData[i].event
-
+                
                 // Deleted section will take care of deleting child items.
                 // In case of moving an item from deleted section, tableview will
                 // crash anyway, so this is not limiting anything.
@@ -604,7 +632,13 @@ public enum Diff {
                     deletedSections.append(i)
                     continue
                 }
-
+                
+                if event == .updated {
+                    updatedSections.append(i)
+                    afterDeleteState.append(try Section(safeOriginal: finalSections[i], safeItems: finalSections[i].items))
+                    continue
+                }
+                
                 var afterDeleteItems: [Section.Item] = []
                 for j in 0 ..< initialItems.count {
                     let event = initialItemData[i][j].event
@@ -627,13 +661,14 @@ public enum Diff {
             }
             // }
 
-            if deletedItems.isEmpty && deletedSections.isEmpty && updatedItems.isEmpty {
+            if deletedItems.isEmpty && deletedSections.isEmpty && updatedItems.isEmpty && updatedSections.isEmpty {
                 return []
             }
 
             return [Changeset(
                 finalSections: afterDeleteState,
                 deletedSections: deletedSections,
+                updatedSections: updatedSections,
                 deletedItems: deletedItems,
                 updatedItems: updatedItems
                 )]
@@ -646,6 +681,8 @@ public enum Diff {
 
             for i in 0 ..< initialSections.count {
                 switch initialSectionData[i].event {
+                case .updated:
+                    break
                 case .deleted:
                     break
                 case .moved:

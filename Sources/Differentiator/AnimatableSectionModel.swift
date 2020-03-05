@@ -8,11 +8,11 @@
 
 import Foundation
 
-public protocol AnimatableSectionModelType: SectionModelType, Identifiable where Item: Identifiable, Item: Equatable {
+public protocol AnimatableSectionModelType: SectionModelType, Identifiable & Equatable where Item: Identifiable, Item: Equatable {
     
 }
 
-public struct AnimatableSectionModel<Section: Identifiable, ItemType: Identifiable & Equatable> {
+public struct AnimatableSectionModel<Section: Identifiable & Equatable, ItemType: Identifiable & Equatable> {
     
     public var model: Section
     public var items: [Item]
@@ -43,7 +43,7 @@ extension AnimatableSectionModel: Equatable where Section: Equatable {
     
     public static func == (lhs: AnimatableSectionModel, rhs: AnimatableSectionModel) -> Bool {
         return lhs.model == rhs.model
-            && lhs.items == rhs.items
+//            && lhs.items == rhs.items
     }
 }
 

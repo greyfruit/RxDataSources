@@ -161,7 +161,7 @@
 		OBJ_518 /* RxTableViewSectionedReloadDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_37 /* RxTableViewSectionedReloadDataSource.swift */; };
 		OBJ_519 /* String+IdentifiableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_38 /* String+IdentifiableType.swift */; };
 		OBJ_520 /* TableViewSectionedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_39 /* TableViewSectionedDataSource.swift */; };
-		OBJ_521 /* UI+SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* UI+SectionedViewType.swift */; };
+		OBJ_521 /* SectionedViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_40 /* SectionedViewType.swift */; };
 		OBJ_522 /* ViewTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_41 /* ViewTransition.swift */; };
 		OBJ_524 /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "RxSwift::RxCocoa::Product" /* RxCocoa.framework */; };
 		OBJ_525 /* RxCocoaRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = "RxSwift::RxCocoaRuntime::Product" /* RxCocoaRuntime.framework */; };
@@ -726,7 +726,7 @@
 		OBJ_37 /* RxTableViewSectionedReloadDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxTableViewSectionedReloadDataSource.swift; sourceTree = "<group>"; };
 		OBJ_38 /* String+IdentifiableType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+IdentifiableType.swift"; sourceTree = "<group>"; };
 		OBJ_39 /* TableViewSectionedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewSectionedDataSource.swift; sourceTree = "<group>"; };
-		OBJ_40 /* UI+SectionedViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI+SectionedViewType.swift"; sourceTree = "<group>"; };
+		OBJ_40 /* SectionedViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedViewType.swift; sourceTree = "<group>"; };
 		OBJ_41 /* ViewTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTransition.swift; sourceTree = "<group>"; };
 		OBJ_44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		OBJ_45 /* AlgorithmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlgorithmTests.swift; sourceTree = "<group>"; };
@@ -1060,21 +1060,21 @@
 			children = (
 				OBJ_24 /* RxDataSources.h */,
 				OBJ_25 /* Info.plist */,
+				OBJ_41 /* ViewTransition.swift */,
+				OBJ_40 /* SectionedViewType.swift */,
 				OBJ_26 /* AnimationConfiguration.swift */,
-				OBJ_27 /* Array+Extensions.swift */,
+				OBJ_35 /* RxPickerViewAdapter.swift */,
+				OBJ_39 /* TableViewSectionedDataSource.swift */,
+				OBJ_37 /* RxTableViewSectionedReloadDataSource.swift */,
+				OBJ_36 /* RxTableViewSectionedAnimatedDataSource.swift */,
 				OBJ_28 /* CollectionViewSectionedDataSource.swift */,
-				OBJ_29 /* DataSources.swift */,
+				OBJ_34 /* RxCollectionViewSectionedReloadDataSource.swift */,
+				OBJ_33 /* RxCollectionViewSectionedAnimatedDataSource.swift */,
 				OBJ_31 /* FloatingPointType+IdentifiableType.swift */,
 				OBJ_32 /* IntegerType+IdentifiableType.swift */,
-				OBJ_33 /* RxCollectionViewSectionedAnimatedDataSource.swift */,
-				OBJ_34 /* RxCollectionViewSectionedReloadDataSource.swift */,
-				OBJ_35 /* RxPickerViewAdapter.swift */,
-				OBJ_36 /* RxTableViewSectionedAnimatedDataSource.swift */,
-				OBJ_37 /* RxTableViewSectionedReloadDataSource.swift */,
 				OBJ_38 /* String+IdentifiableType.swift */,
-				OBJ_39 /* TableViewSectionedDataSource.swift */,
-				OBJ_40 /* UI+SectionedViewType.swift */,
-				OBJ_41 /* ViewTransition.swift */,
+				OBJ_27 /* Array+Extensions.swift */,
+				OBJ_29 /* DataSources.swift */,
 			);
 			name = RxDataSources;
 			path = Sources/RxDataSources;
@@ -1128,7 +1128,7 @@
 			path = Tests/RxDataSourcesTests;
 			sourceTree = SOURCE_ROOT;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -1146,7 +1146,6 @@
 				OBJ_346 /* Differentiator.podspec */,
 				OBJ_347 /* RxDataSources.podspec */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_54 /* Dependencies */ = {
@@ -1511,7 +1510,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_331 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1687,7 +1686,7 @@
 				OBJ_518 /* RxTableViewSectionedReloadDataSource.swift in Sources */,
 				OBJ_519 /* String+IdentifiableType.swift in Sources */,
 				OBJ_520 /* TableViewSectionedDataSource.swift in Sources */,
-				OBJ_521 /* UI+SectionedViewType.swift in Sources */,
+				OBJ_521 /* SectionedViewType.swift in Sources */,
 				OBJ_522 /* ViewTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

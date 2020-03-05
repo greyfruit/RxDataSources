@@ -21,7 +21,7 @@ func precondition(_ condition: Bool, _ message: @autoclosure() -> String) throws
     
     debugFatalError("Precondition failed")
 
-    throw DifferentiatorError.preconditionFailed(message: message())
+//    throw DifferentiatorError.preconditionFailed(message: message())
 }
 
 func debugFatalError(_ error: Error) {
@@ -30,7 +30,7 @@ func debugFatalError(_ error: Error) {
 
 func debugFatalError(_ message: String) {
     #if DEBUG
-        fatalError(message)
+//        fatalError(message)
     #else
         print(message)
     #endif
