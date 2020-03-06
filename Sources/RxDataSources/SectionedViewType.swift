@@ -24,7 +24,7 @@ public protocol SectionedViewType {
 }
 
 extension UITableView : SectionedViewType {
-  
+    
     public func insertItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
         self.insertRows(at: paths, with: animationStyle)
     }
@@ -67,7 +67,7 @@ extension UICollectionView : SectionedViewType {
     public func deleteItemsAtIndexPaths(_ paths: [IndexPath], animationStyle: UITableView.RowAnimation) {
         self.deleteItems(at: paths)
     }
-
+    
     public func moveItemAtIndexPath(_ from: IndexPath, to: IndexPath) {
         self.moveItem(at: from, to: to)
     }
@@ -97,34 +97,46 @@ extension SectionedViewType {
     
     public func batchUpdates<Section>(_ changes: Changeset<Section>, animationConfiguration: AnimationConfiguration) {
         
-        deleteSections(changes.deletedSections, animationStyle: animationConfiguration.deleteAnimation)
+        self.deleteSections(changes.deletedSections, animationStyle: animationConfiguration.deleteAnimation)
         
-        insertSections(changes.insertedSections, animationStyle: animationConfiguration.insertAnimation)
+        self.insertSections(changes.insertedSections, animationStyle: animationConfiguration.insertAnimation)
         
-        reloadSections(changes.updatedSections, animationStyle: animationConfiguration.reloadAnimation)
+        self.reloadSections(changes.updatedSections, animationStyle: animationConfiguration.reloadAnimation)
         
         for (from, to) in changes.movedSections {
-            moveSection(from, to: to)
+            /*
+            Move does not make updates if it was simultaneously
+            self.moveSection(from, to: to)
+             */
+            self.deleteSections([from], animationStyle: animationConfiguration.deleteAnimation)
+            self.insertSections([to], animationStyle: animationConfiguration.insertAnimation)
         }
         
-        deleteItemsAtIndexPaths(
+        self.deleteItemsAtIndexPaths(
             changes.deletedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
             animationStyle: animationConfiguration.deleteAnimation
         )
-        insertItemsAtIndexPaths(
+        
+        self.insertItemsAtIndexPaths(
             changes.insertedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
             animationStyle: animationConfiguration.insertAnimation
         )
-        reloadItemsAtIndexPaths(
+        
+        self.reloadItemsAtIndexPaths(
             changes.updatedItems.map { IndexPath(item: $0.itemIndex, section: $0.sectionIndex) },
             animationStyle: animationConfiguration.reloadAnimation
         )
         
         for (from, to) in changes.movedItems {
-            moveItemAtIndexPath(
-                IndexPath(item: from.itemIndex, section: from.sectionIndex),
-                to: IndexPath(item: to.itemIndex, section: to.sectionIndex)
-            )
+            /*
+             Move does not make updates if it was simultaneously
+             self.moveItemAtIndexPath(
+                 IndexPath(item: from.itemIndex, section: from.sectionIndex),
+                 to: IndexPath(item: to.itemIndex, section: to.sectionIndex)
+             )
+             */
+            self.deleteItemsAtIndexPaths([IndexPath(item: from.itemIndex, section: from.sectionIndex)], animationStyle: animationConfiguration.deleteAnimation)
+            self.insertItemsAtIndexPaths([IndexPath(item: to.itemIndex, section: to.sectionIndex)], animationStyle: animationConfiguration.insertAnimation)
         }
     }
 }

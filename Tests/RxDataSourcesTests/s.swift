@@ -16,21 +16,24 @@ import RxDataSources
 struct s {
     let id: Int
     let items: [i]
+    let content: Int
 }
 
 extension s {
-    init(_ id: Int, _ items: [i]) {
+    init(_ id: Int, _ items: [i], content: Int = 0) {
         self.id = id
         self.items = items
+        self.content = content
     }
 }
 
 extension s: AnimatableSectionModelType {
     typealias Item = i
-
+    
     init(original: s, items: [Item]) {
         self.id = original.id
         self.items = items
+        self.content = original.content
     }
 }
 
@@ -40,7 +43,7 @@ extension s: Equatable {
 
 func == (lhs: s, rhs: s) -> Bool {
     return lhs.id == rhs.id
-//        && lhs.items == rhs.items
+        && lhs.content == rhs.content
 }
 
 extension s: CustomDebugStringConvertible {
@@ -53,7 +56,7 @@ extension s: CustomDebugStringConvertible {
 struct sInvalidInitializerImplementation1 {
     let id: Int
     let items: [i]
-
+    
     init(_ id: Int, _ items: [i]) {
         self.id = id
         self.items = items
@@ -62,12 +65,11 @@ struct sInvalidInitializerImplementation1 {
 
 func == (lhs: sInvalidInitializerImplementation1, rhs: sInvalidInitializerImplementation1) -> Bool {
     return lhs.id == rhs.id
-//        && lhs.items == rhs.items
 }
 
 extension sInvalidInitializerImplementation1: AnimatableSectionModelType, Equatable {
     typealias Item = i
-
+    
     init(original: sInvalidInitializerImplementation1, items: [Item]) {
         self.id = original.id
         self.items = items + items
@@ -77,7 +79,7 @@ extension sInvalidInitializerImplementation1: AnimatableSectionModelType, Equata
 struct sInvalidInitializerImplementation2 {
     let id: Int
     let items: [i]
-
+    
     init(_ id: Int, _ items: [i]) {
         self.id = id
         self.items = items
@@ -86,7 +88,7 @@ struct sInvalidInitializerImplementation2 {
 
 extension sInvalidInitializerImplementation2: AnimatableSectionModelType, Equatable {
     typealias Item = i
-
+    
     init(original: sInvalidInitializerImplementation2, items: [Item]) {
         self.id = -1
         self.items = items

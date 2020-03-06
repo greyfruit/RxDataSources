@@ -16,7 +16,7 @@ public struct AnimationConfiguration {
     public let insertAnimation: UITableView.RowAnimation
     public let reloadAnimation: UITableView.RowAnimation
     public let deleteAnimation: UITableView.RowAnimation
-
+    
     public init
     (
         insertAnimation: UITableView.RowAnimation = .automatic,

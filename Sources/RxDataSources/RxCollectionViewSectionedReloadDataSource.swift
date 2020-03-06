@@ -17,11 +17,11 @@ import RxCocoa
 open class RxCollectionViewSectionedReloadDataSource<Section: SectionModelType>: CollectionViewSectionedDataSource<Section>, RxCollectionViewDataSourceType {
     
     public typealias Element = [Section]
-
+    
     open func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, element in
             #if DEBUG
-                dataSource._dataSourceBound = true
+            dataSource._dataSourceBound = true
             #endif
             dataSource.setSections(element)
             collectionView.reloadData()

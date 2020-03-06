@@ -31,7 +31,7 @@ extension IdentifiableValue: CustomStringConvertible, CustomDebugStringConvertib
     public var description: String {
         return "\(self.value)"
     }
-
+    
     public var debugDescription: String {
         return "\(self.value)"
     }

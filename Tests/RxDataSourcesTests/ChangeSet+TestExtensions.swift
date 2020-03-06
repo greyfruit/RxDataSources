@@ -109,7 +109,11 @@ extension Changeset {
         for section in deletedSections {
             resultAfterDeletesAndUpdates[section].deleted = true
         }
-
+        
+        for section in updatedSections {
+            resultAfterDeletesAndUpdates[section].updated = true
+        }
+        
         resultAfterDeletesAndUpdates = resultAfterDeletesAndUpdates.filter { !$0.deleted }
 
         for (sectionIndex, section) in resultAfterDeletesAndUpdates.enumerated() {
@@ -149,11 +153,12 @@ extension Changeset {
         for index in 0 ..< totalCount {
             if insertedSectionsIndexes.contains(index) {
                 results.append(finalSections[index])
-            }
-            else if let sourceIndex = destinationToSourceMapping[index] {
-                results.append(original[sourceIndex])
-            }
-            else {
+            } else if updatedSections.contains(index) {
+                results.append(finalSections[index])
+            } else if let sourceIndex = destinationToSourceMapping[index] {
+//                results.append(original[sourceIndex])
+                results.append(finalSections[index])
+            } else {
                 guard findNextUntouchedSourceSection() else {
                     fatalError("Oooops, wrong commands.")
                 }

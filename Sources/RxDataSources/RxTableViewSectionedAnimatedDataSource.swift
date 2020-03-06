@@ -18,65 +18,65 @@ open class RxTableViewSectionedAnimatedDataSource<Section: AnimatableSectionMode
     
     public typealias Element = [Section]
     public typealias DecideViewTransition = (TableViewSectionedDataSource<Section>, UITableView, [Changeset<Section>]) -> ViewTransition
-
+    
     /// Animation configuration for data source
     public var animationConfiguration: AnimationConfiguration
-
+    
     /// Calculates view transition depending on type of changes
     public var decideViewTransition: DecideViewTransition
-
+    
     #if os(iOS)
-        public init(
-                animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
-                decideViewTransition: @escaping DecideViewTransition = { _, _, _ in .animated },
-                configureCell: @escaping ConfigureCell,
-                titleForHeaderInSection: @escaping  TitleForHeaderInSection = { _, _ in nil },
-                titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
-                canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
-                canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
-                sectionIndexTitles: @escaping SectionIndexTitles = { _ in nil },
-                sectionForSectionIndexTitle: @escaping SectionForSectionIndexTitle = { _, _, index in index }
-            ) {
-            self.animationConfiguration = animationConfiguration
-            self.decideViewTransition = decideViewTransition
-            super.init(
-                configureCell: configureCell,
-               titleForHeaderInSection: titleForHeaderInSection,
-               titleForFooterInSection: titleForFooterInSection,
-               canEditRowAtIndexPath: canEditRowAtIndexPath,
-               canMoveRowAtIndexPath: canMoveRowAtIndexPath,
-               sectionIndexTitles: sectionIndexTitles,
-               sectionForSectionIndexTitle: sectionForSectionIndexTitle
-            )
-        }
+    public init(
+        animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
+        decideViewTransition: @escaping DecideViewTransition = { _, _, _ in .animated },
+        configureCell: @escaping ConfigureCell,
+        titleForHeaderInSection: @escaping  TitleForHeaderInSection = { _, _ in nil },
+        titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
+        canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
+        canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
+        sectionIndexTitles: @escaping SectionIndexTitles = { _ in nil },
+        sectionForSectionIndexTitle: @escaping SectionForSectionIndexTitle = { _, _, index in index }
+    ) {
+        self.animationConfiguration = animationConfiguration
+        self.decideViewTransition = decideViewTransition
+        super.init(
+            configureCell: configureCell,
+            titleForHeaderInSection: titleForHeaderInSection,
+            titleForFooterInSection: titleForFooterInSection,
+            canEditRowAtIndexPath: canEditRowAtIndexPath,
+            canMoveRowAtIndexPath: canMoveRowAtIndexPath,
+            sectionIndexTitles: sectionIndexTitles,
+            sectionForSectionIndexTitle: sectionForSectionIndexTitle
+        )
+    }
     #else
-        public init(
-                animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
-                decideViewTransition: @escaping DecideViewTransition = { _, _, _ in .animated },
-                configureCell: @escaping ConfigureCell,
-                titleForHeaderInSection: @escaping  TitleForHeaderInSection = { _, _ in nil },
-                titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
-                canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
-                canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false }
-            ) {
-            self.animationConfiguration = animationConfiguration
-            self.decideViewTransition = decideViewTransition
-            super.init(
-                configureCell: configureCell,
-               titleForHeaderInSection: titleForHeaderInSection,
-               titleForFooterInSection: titleForFooterInSection,
-               canEditRowAtIndexPath: canEditRowAtIndexPath,
-               canMoveRowAtIndexPath: canMoveRowAtIndexPath
-            )
-        }
+    public init(
+        animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
+        decideViewTransition: @escaping DecideViewTransition = { _, _, _ in .animated },
+        configureCell: @escaping ConfigureCell,
+        titleForHeaderInSection: @escaping  TitleForHeaderInSection = { _, _ in nil },
+        titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
+        canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
+        canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false }
+    ) {
+        self.animationConfiguration = animationConfiguration
+        self.decideViewTransition = decideViewTransition
+        super.init(
+            configureCell: configureCell,
+            titleForHeaderInSection: titleForHeaderInSection,
+            titleForFooterInSection: titleForFooterInSection,
+            canEditRowAtIndexPath: canEditRowAtIndexPath,
+            canMoveRowAtIndexPath: canMoveRowAtIndexPath
+        )
+    }
     #endif
-
+    
     var dataSet = false
-
+    
     open func tableView(_ tableView: UITableView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, newSections in
             #if DEBUG
-                dataSource._dataSourceBound = true
+            dataSource._dataSourceBound = true
             #endif
             if !dataSource.dataSet {
                 dataSource.dataSet = true

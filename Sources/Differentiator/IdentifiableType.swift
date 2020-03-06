@@ -11,6 +11,6 @@ import Foundation
 public protocol Identifiable {
     
     associatedtype ID: Hashable
-
+    
     var id : ID { get }
 }

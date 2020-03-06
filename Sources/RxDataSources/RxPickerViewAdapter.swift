@@ -17,9 +17,9 @@ import RxCocoa
 /**
  Example:
  
-let adapter = RxPickerViewStringAdapter<[T]>(...)
+ let adapter = RxPickerViewStringAdapter<[T]>(...)
  
-items
+ items
  .bind(to: firstPickerView.rx.items(adapter: adapter))
  .disposed(by: disposeBag)
  
@@ -31,17 +31,17 @@ open class RxPickerViewStringAdapter<Components>: RxPickerViewDataSource<Compone
      - parameter components
      - parameter row
      - parameter component
-    */
+     */
     public typealias TitleForRow = (
         _ dataSource: RxPickerViewStringAdapter<Components>,
         _ pickerView: UIPickerView,
         _ components: Components,
         _ row: Int,
         _ component: Int
-    ) -> String?
+        ) -> String?
     
     private let titleForRow: TitleForRow
-
+    
     /**
      - parameter components: Initial content value.
      - parameter numberOfComponents: Implementation of corresponding delegate method.
@@ -81,17 +81,17 @@ open class RxPickerViewAttributedStringAdapter<Components>: RxPickerViewDataSour
      - parameter components
      - parameter row
      - parameter component
-    */
+     */
     public typealias AttributedTitleForRow = (
         _ dataSource: RxPickerViewAttributedStringAdapter<Components>,
         _ pickerView: UIPickerView,
         _ components: Components,
         _ row: Int,
         _ component: Int
-    ) -> NSAttributedString?
+        ) -> NSAttributedString?
     
     private let attributedTitleForRow: AttributedTitleForRow
-
+    
     /**
      - parameter components: Initial content value.
      - parameter numberOfComponents: Implementation of corresponding delegate method.
@@ -132,7 +132,7 @@ open class RxPickerViewViewAdapter<Components>: RxPickerViewDataSource<Component
      - parameter row
      - parameter component
      - parameter view
-    */
+     */
     public typealias ViewForRow = (
         _ dataSource: RxPickerViewViewAdapter<Components>,
         _ pickerView: UIPickerView,
@@ -140,10 +140,10 @@ open class RxPickerViewViewAdapter<Components>: RxPickerViewDataSource<Component
         _ row: Int,
         _ component: Int,
         _ view: UIView?
-    ) -> UIView
+        ) -> UIView
     
     private let viewForRow: ViewForRow
-
+    
     /**
      - parameter components: Initial content value.
      - parameter numberOfComponents: Implementation of corresponding delegate method.
@@ -171,7 +171,7 @@ open class RxPickerViewDataSource<Components>: NSObject, UIPickerViewDataSource 
      - parameter dataSource
      - parameter pickerView
      - parameter components
-    */
+     */
     public typealias NumberOfComponents = (
         _ dataSource: RxPickerViewDataSource,
         _ pickerView: UIPickerView,
@@ -181,16 +181,16 @@ open class RxPickerViewDataSource<Components>: NSObject, UIPickerViewDataSource 
      - parameter pickerView
      - parameter components
      - parameter component
-    */
+     */
     public typealias NumberOfRowsInComponent = (
         _ dataSource: RxPickerViewDataSource,
         _ pickerView: UIPickerView,
         _ components: Components,
         _ component: Int
-    ) -> Int
+        ) -> Int
     
     fileprivate var components: Components
-
+    
     /**
      - parameter components: Initial content value.
      - parameter numberOfComponents: Implementation of corresponding delegate method.

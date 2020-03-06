@@ -96,5 +96,6 @@ extension NumberSection: Equatable {
 }
 
 func == (lhs: NumberSection, rhs: NumberSection) -> Bool {
-    return lhs.header == rhs.header && lhs.items == rhs.items && lhs.updated == rhs.updated
+    return lhs.header == rhs.header
+        && lhs.updated == rhs.updated
 }

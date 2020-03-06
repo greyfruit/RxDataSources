@@ -13,12 +13,12 @@ import RxDataSources
 
 func XCAssertEqual<S: AnimatableSectionModelType>(_ lhs: [S], _ rhs: [S], file: StaticString = #file, line: UInt = #line)
     where S: Equatable {
-    let areEqual = lhs == rhs
-    if !areEqual {
-        printSectionModelDifferences(lhs, rhs)
-    }
-    
-    XCTAssertTrue(areEqual, file: file, line: line)
+        let areEqual = lhs == rhs
+        if !areEqual {
+            printSectionModelDifferences(lhs, rhs)
+        }
+        
+        XCTAssertTrue(areEqual, file: file, line: line)
 }
 
 fileprivate struct EquatableArray<Element: Equatable> : Equatable {
@@ -42,7 +42,7 @@ fileprivate func printSequenceDifferences<E>(_ lhs: [E], _ rhs: [E], _ equal: (E
             print("rhs[\(index)]:\n    \(r)")
         }
     }
-
+    
     let shortest = min(lhs.count, rhs.count)
     for (index, element) in lhs[shortest ..< lhs.count].enumerated() {
         print("lhs[\(index + shortest)]:\n    \(element)")
@@ -54,26 +54,26 @@ fileprivate func printSequenceDifferences<E>(_ lhs: [E], _ rhs: [E], _ equal: (E
 
 fileprivate func printSectionModelDifferences<S: AnimatableSectionModelType>(_ lhs: [S], _ rhs: [S])
     where S: Equatable {
-    print("Differences in sections:")
-    for (index, elements) in zip(lhs, rhs).enumerated() {
-        let l = elements.0
-        let r = elements.1
-        if l != r {
-            if l.id != r.id {
-                print("lhs.identity[\(index)] (\(l.id)) != rhs.identity[\(index)] (\(r.id))\n")
-            }
-            if l.items != r.items {
-                print("Difference in items for \(l.id) and \(r.id)")
-                printSequenceDifferences(l.items, r.items, { $0 == $1 })
+        print("Differences in sections:")
+        for (index, elements) in zip(lhs, rhs).enumerated() {
+            let l = elements.0
+            let r = elements.1
+            if l != r {
+                if l.id != r.id {
+                    print("lhs.identity[\(index)] (\(l.id)) != rhs.identity[\(index)] (\(r.id))\n")
+                }
+                if l.items != r.items {
+                    print("Difference in items for \(l.id) and \(r.id)")
+                    printSequenceDifferences(l.items, r.items, { $0 == $1 })
+                }
             }
         }
-    }
-
-    let shortest = min(lhs.count, rhs.count)
-    for (index, element) in lhs[shortest ..< lhs.count].enumerated() {
-        print("missing lhs[\(index + shortest)]:\n    \(element)")
-    }
-    for (index, element) in rhs[shortest ..< rhs.count].enumerated() {
-        print("missing rhs[\(index + shortest)]:\n    \(element)")
-    }
+        
+        let shortest = min(lhs.count, rhs.count)
+        for (index, element) in lhs[shortest ..< lhs.count].enumerated() {
+            print("missing lhs[\(index + shortest)]:\n    \(element)")
+        }
+        for (index, element) in rhs[shortest ..< rhs.count].enumerated() {
+            print("missing rhs[\(index + shortest)]:\n    \(element)")
+        }
 }

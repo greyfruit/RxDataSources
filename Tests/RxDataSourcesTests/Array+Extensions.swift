@@ -8,14 +8,12 @@
 
 import Foundation
 
-
 extension Dictionary {
     init<T>(elements: [T], keySelector: (T) -> Key, valueSelector: (T) -> Value) {
         var result: [Key: Value] = [:]
         for element in elements {
             result[keySelector(element)] = valueSelector(element)
         }
-
         self = result
     }
 }

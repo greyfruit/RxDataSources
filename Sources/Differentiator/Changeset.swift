@@ -9,15 +9,15 @@
 import Foundation
 
 public struct Changeset<Section: SectionModelType> {
-
+    
     public let reloadData: Bool
-
+    
     /*
      Input and output
      */
     public let originalSections: [Section]
     public let finalSections: [Section]
-
+    
     /*
      Sections transformations
      */
@@ -25,7 +25,7 @@ public struct Changeset<Section: SectionModelType> {
     public let deletedSections: [Int]
     public let movedSections: [(from: Int, to: Int)]
     public let updatedSections: [Int]
-
+    
     /*
      Items transformations
      */
@@ -33,7 +33,7 @@ public struct Changeset<Section: SectionModelType> {
     public let deletedItems: [ItemPath]
     public let movedItems: [(from: ItemPath, to: ItemPath)]
     public let updatedItems: [ItemPath]
-
+    
     init(
         reloadData: Bool = false,
         originalSections: [Section] = [],
@@ -59,7 +59,7 @@ public struct Changeset<Section: SectionModelType> {
         self.movedItems = movedItems
         self.updatedItems = updatedItems
     }
-
+    
     public static func initialValue(_ sections: [Section]) -> Changeset<Section> {
         return Changeset<Section>(
             reloadData: true,
@@ -77,20 +77,20 @@ extension ItemPath: CustomDebugStringConvertible {
 }
 
 extension Changeset: CustomDebugStringConvertible {
-
+    
     public var debugDescription : String {
         let serializedSections = "[\n" + finalSections.map { "\($0)" }.joined(separator: ",\n") + "\n]\n"
         return " >> Final sections"
-        + "   \n\(serializedSections)"
-        + (!insertedSections.isEmpty || !deletedSections.isEmpty || !movedSections.isEmpty || !updatedSections.isEmpty ? "\nSections:" : "")
-        + (!insertedSections.isEmpty ? "\ninsertedSections:\n\t\(insertedSections)" : "")
-        + (!deletedSections.isEmpty ?  "\ndeletedSections:\n\t\(deletedSections)" : "")
-        + (!movedSections.isEmpty ? "\nmovedSections:\n\t\(movedSections)" : "")
-        + (!updatedSections.isEmpty ? "\nupdatesSections:\n\t\(updatedSections)" : "")
+            + "   \n\(serializedSections)"
+            + (!insertedSections.isEmpty || !deletedSections.isEmpty || !movedSections.isEmpty || !updatedSections.isEmpty ? "\nSections:" : "")
+            + (!insertedSections.isEmpty ? "\ninsertedSections:\n\t\(insertedSections)" : "")
+            + (!deletedSections.isEmpty ?  "\ndeletedSections:\n\t\(deletedSections)" : "")
+            + (!movedSections.isEmpty ? "\nmovedSections:\n\t\(movedSections)" : "")
+            + (!updatedSections.isEmpty ? "\nupdatesSections:\n\t\(updatedSections)" : "")
             + (!insertedItems.isEmpty || !deletedItems.isEmpty || !movedItems.isEmpty || !updatedItems.isEmpty ? "\nItems:" : "")
-        + (!insertedItems.isEmpty ? "\ninsertedItems:\n\t\(insertedItems)" : "")
-        + (!deletedItems.isEmpty ? "\ndeletedItems:\n\t\(deletedItems)" : "")
-        + (!movedItems.isEmpty ? "\nmovedItems:\n\t\(movedItems)" : "")
-        + (!updatedItems.isEmpty ? "\nupdatedItems:\n\t\(updatedItems)" : "")
+            + (!insertedItems.isEmpty ? "\ninsertedItems:\n\t\(insertedItems)" : "")
+            + (!deletedItems.isEmpty ? "\ndeletedItems:\n\t\(deletedItems)" : "")
+            + (!movedItems.isEmpty ? "\nmovedItems:\n\t\(movedItems)" : "")
+            + (!updatedItems.isEmpty ? "\nupdatedItems:\n\t\(updatedItems)" : "")
     }
 }

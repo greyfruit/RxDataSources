@@ -13,7 +13,7 @@ import RxDataSources
 struct i {
     let id: Int
     let value: String
-
+    
     init(_ id: Int, _ value: String) {
         self.id = id
         self.value = value
@@ -24,7 +24,8 @@ extension i: Identifiable, Equatable {
 }
 
 func == (lhs: i, rhs: i) -> Bool {
-    return lhs.id == rhs.id && lhs.value == rhs.value
+    return lhs.id == rhs.id
+        && lhs.value == rhs.value
 }
 
 extension i: CustomDebugStringConvertible {

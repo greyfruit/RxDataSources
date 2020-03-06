@@ -9,7 +9,7 @@
 import Foundation
 
 extension String : Identifiable {
-
+    
     public typealias ID = Self
     
     public var id: ID {

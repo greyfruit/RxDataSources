@@ -12,7 +12,7 @@ import Differentiator
 #if !RX_NO_MODULE
 import RxCocoa
 #endif
-    
+
 open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObject, UICollectionViewDataSource, SectionedViewDataSourceType {
     
     public typealias Item = Section.Item
@@ -21,7 +21,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObjec
     public typealias ConfigureSupplementaryView = (CollectionViewSectionedDataSource<Section>, UICollectionView, String, IndexPath) -> UICollectionReusableView
     public typealias MoveItem = (CollectionViewSectionedDataSource<Section>, _ sourceIndexPath:IndexPath, _ destinationIndexPath:IndexPath) -> Void
     public typealias CanMoveItemAtIndexPath = (CollectionViewSectionedDataSource<Section>, IndexPath) -> Bool
-
+    
     public init(
         configureCell: @escaping ConfigureCell,
         configureSupplementaryView: ConfigureSupplementaryView? = nil,
@@ -33,19 +33,19 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObjec
         self.moveItem = moveItem
         self.canMoveItemAtIndexPath = canMoveItemAtIndexPath
     }
-
+    
     #if DEBUG
     // If data source has already been bound, then mutating it
     // afterwards isn't something desired.
     // This simulates immutability after binding
     var _dataSourceBound: Bool = false
-
+    
     private func ensureNotMutatedAfterBinding() {
         assert(!_dataSourceBound, "Data source is already bound. Please write this line before binding call (`bindTo`, `drive`). Data source must first be completely configured, and then bound after that, otherwise there could be runtime bugs, glitches, or partial malfunctions.")
     }
     
     #endif
-
+    
     // This structure exists because model can be mutable
     // In that case current state value should be preserved.
     // The state that needs to be preserved is ordering of items in section
@@ -55,11 +55,11 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObjec
     public typealias SectionModelSnapshot = SectionModel<Section, Item>
     
     private var _sectionModels: [SectionModelSnapshot] = []
-
+    
     open var sectionModels: [Section] {
         return _sectionModels.map { Section(original: $0.model, items: $0.items) }
     }
-
+    
     open subscript(section: Int) -> Section {
         let sectionModel = self._sectionModels[section]
         return Section(original: sectionModel.model, items: sectionModel.items)
@@ -91,7 +91,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObjec
             #endif
         }
     }
-
+    
     open var configureSupplementaryView: ConfigureSupplementaryView? {
         didSet {
             #if DEBUG
@@ -103,7 +103,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObjec
     open var moveItem: MoveItem {
         didSet {
             #if DEBUG
-                ensureNotMutatedAfterBinding()
+            ensureNotMutatedAfterBinding()
             #endif
         }
     }
@@ -114,7 +114,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObjec
             #endif
         }
     }
-
+    
     // UICollectionViewDataSource
     
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -147,7 +147,7 @@ open class CollectionViewSectionedDataSource<Section: SectionModelType>: NSObjec
         self._sectionModels.moveFromSourceIndexPath(sourceIndexPath, destinationIndexPath: destinationIndexPath)
         self.moveItem(self, sourceIndexPath, destinationIndexPath)
     }
-
+    
     override open func responds(to aSelector: Selector!) -> Bool {
         if aSelector == #selector(UICollectionViewDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:)) {
             return configureSupplementaryView != nil

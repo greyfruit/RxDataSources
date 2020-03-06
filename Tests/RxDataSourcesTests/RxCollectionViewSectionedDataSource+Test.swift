@@ -22,12 +22,12 @@ extension RxCollectionViewSectionedDataSourceTest {
         let dataSource = RxCollectionViewSectionedReloadDataSource<AnimatableSectionModel<String, String>>(configureCell: { _, _, _, _  in UICollectionViewCell() })
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-
+        
         XCTAssertFalse(dataSource.responds(to: #selector(UICollectionViewDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:))))
-
+        
         let sentinel = UICollectionReusableView()
         dataSource.configureSupplementaryView = { _, _, _, _ in return sentinel }
-
+        
         let returnValue = dataSource.collectionView(
             collectionView,
             viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
@@ -36,17 +36,17 @@ extension RxCollectionViewSectionedDataSourceTest {
         XCTAssertEqual(returnValue, sentinel)
         XCTAssertTrue(dataSource.responds(to: #selector(UICollectionViewDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:))))
     }
-
+    
     func testCollectionViewSectionedDataSource_optionalConfigureSupplementaryView() {
         let dataSource = CollectionViewSectionedDataSource<AnimatableSectionModel<String, String>>(configureCell: { _, _, _, _  in UICollectionViewCell() })
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-
+        
         XCTAssertFalse(dataSource.responds(to: #selector(UICollectionViewDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:))))
-
+        
         let sentinel = UICollectionReusableView()
         dataSource.configureSupplementaryView = { _, _, _, _ in return sentinel }
-
+        
         let returnValue = dataSource.collectionView(
             collectionView,
             viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
@@ -67,7 +67,7 @@ extension RxCollectionViewSectionedDataSourceTest {
         )
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-
+        
         let returnValue = dataSource.collectionView(
             collectionView,
             viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
@@ -76,7 +76,7 @@ extension RxCollectionViewSectionedDataSourceTest {
         XCTAssertEqual(returnValue, sentinel)
         XCTAssertTrue(dataSource.responds(to: #selector(UICollectionViewDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:))))
     }
-
+    
     func testCollectionViewSectionedReloadDataSource_optionalConfigureSupplementaryView_initializer() {
         let sentinel = UICollectionReusableView()
         let dataSource = RxCollectionViewSectionedReloadDataSource<AnimatableSectionModel<String, String>>(
@@ -85,7 +85,7 @@ extension RxCollectionViewSectionedDataSourceTest {
         )
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-
+        
         let returnValue = dataSource.collectionView(
             collectionView,
             viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,
@@ -94,7 +94,7 @@ extension RxCollectionViewSectionedDataSourceTest {
         XCTAssertEqual(returnValue, sentinel)
         XCTAssertTrue(dataSource.responds(to: #selector(UICollectionViewDataSource.collectionView(_:viewForSupplementaryElementOfKind:at:))))
     }
-
+    
     func testCollectionViewSectionedDataSource_optionalConfigureSupplementaryView_initializer() {
         let sentinel = UICollectionReusableView()
         let dataSource = CollectionViewSectionedDataSource<AnimatableSectionModel<String, String>>(
@@ -103,7 +103,7 @@ extension RxCollectionViewSectionedDataSourceTest {
         )
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-
+        
         let returnValue = dataSource.collectionView(
             collectionView,
             viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader,

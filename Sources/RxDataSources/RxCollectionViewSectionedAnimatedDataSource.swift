@@ -16,16 +16,16 @@ import RxCocoa
 
 open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectionModelType>
     : CollectionViewSectionedDataSource<Section>
-    , RxCollectionViewDataSourceType {
+, RxCollectionViewDataSourceType {
     public typealias Element = [Section]
     public typealias DecideViewTransition = (CollectionViewSectionedDataSource<Section>, UICollectionView, [Changeset<Section>]) -> ViewTransition
-
+    
     // animation configuration
     public var animationConfiguration: AnimationConfiguration
-
+    
     /// Calculates view transition depending on type of changes
     public var decideViewTransition: DecideViewTransition
-
+    
     public init(
         animationConfiguration: AnimationConfiguration = AnimationConfiguration(),
         decideViewTransition: @escaping DecideViewTransition = { _, _, _ in .animated },
@@ -33,7 +33,7 @@ open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectio
         configureSupplementaryView: ConfigureSupplementaryView? = nil,
         moveItem: @escaping MoveItem = { _, _, _ in () },
         canMoveItemAtIndexPath: @escaping CanMoveItemAtIndexPath = { _, _ in false }
-        ) {
+    ) {
         self.animationConfiguration = animationConfiguration
         self.decideViewTransition = decideViewTransition
         super.init(
@@ -47,11 +47,11 @@ open class RxCollectionViewSectionedAnimatedDataSource<Section: AnimatableSectio
     // there is no longer limitation to load initial sections with reloadData
     // but it is kept as a feature everyone got used to
     var dataSet = false
-
+    
     open func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
         Binder(self) { dataSource, newSections in
             #if DEBUG
-                dataSource._dataSourceBound = true
+            dataSource._dataSourceBound = true
             #endif
             if !dataSource.dataSet {
                 dataSource.dataSet = true
